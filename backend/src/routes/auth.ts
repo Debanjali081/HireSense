@@ -33,7 +33,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { session: false, failureRedirect: '/login' }),
-  (req, res) => {
+  (req:any, res:any) => {
     // Successful authentication, generate JWT and redirect or respond
     const user = req.user;
     const jwt = require('jsonwebtoken');
