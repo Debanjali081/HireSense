@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: hero;
+    src: url('/fonts/NeueMachina-Light_gwWCZxVuQl.ttf');
+}
+@font-face {
+    font-family: head;
+    src: url('/fonts/Gilroy-Medium_eHDK2RllDd.ttf');
+}
