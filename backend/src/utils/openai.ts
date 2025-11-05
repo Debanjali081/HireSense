@@ -73,30 +73,25 @@ const analyzeAnswer = async (
     const prompt = `
 You are an Interview Answer Evaluation AI for the role: ${jobTitle}.
 
-Your output must always follow the exact structure below — no extra text, no introduction, no explanation outside the sections.
+Your output must follow this exact format:
 
----
 **1. Key Strengths:**
-- (Write 3 short bullet points focusing on what the candidate did well)
+- ...
+- ...
+- ...
 
 **2. Areas of Improvement:**
-- (Write 3 short bullet points, constructive, supportive — avoid negative language)
+- ...
+- ...
+- ...
 
 **3. Model Answer (Improved Version):**
-(Write a natural, confident, conversational answer as if spoken by a strong candidate.
-Use clear language. Do not repeat the user's wording. Rewrite it better.)
+(Write the improved answer here)
 
 **4. Score (Out of 10) with Reasoning:**
-Confidence: X/10 — (1 sentence justification)
-Clarity: X/10 — (1 sentence justification)
-Relevance: X/10 — (1 sentence justification)
----
-
-Tone Guidelines:
-- Supportive, encouraging, professional.
-- Avoid robotic, repetitive, or overly formal language.
-- Keep sentences concise and clear.
-- Do not add commentary outside the sections.
+Confidence: X/10 — short reason
+Clarity: X/10 — short reason
+Relevance: X/10 — short reason
 
 Question: ${question}
 User Answer: ${answer}
@@ -104,74 +99,48 @@ User Answer: ${answer}
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const content = response.text();
-    console.log("Gemini response for analyzeAnswer:", content);
-    if (!content) {
-      throw new Error("Failed to analyze answer");
-    }
+    const content = response.text() || "";
 
-    // Parse the response to extract feedback, model answer, and scores
-    // New, more flexible parsing logic
-    const stopLookahead =
-      "(?=\\n?(?:###\\s)?\\*\\*(Strengths|Areas for Improvement|Model Answer|Ratings)\\*\\*|$)";
+    console.log("Gemini response:", content);
 
-    const strengthsMatch = content.match(
-      new RegExp(
-        "(?:###\\s)?\\*\\*Strengths\\*\\*\\s*(.+?)" + stopLookahead,
-        "s"
-      )
-    );
-    const improvementsMatch = content.match(
-      new RegExp(
-        "(?:###\\s)?\\*\\*Areas for Improvement\\*\\*\\s*(.+?)" + stopLookahead,
-        "s"
-      )
-    );
-    const modelAnswerMatch = content.match(
-      new RegExp(
-        "(?:###\\s)?\\*\\*Model Answer\\*\\*\\s*(.+?)" + stopLookahead,
-        "s"
-      )
-    );
-    const ratingsMatch = content.match(
-      new RegExp("(?:###s)?\\*\\*Ratings\\*\\*\\s*(.+?)$", "s")
-    );
-
-    let feedback = "No feedback provided";
-    if (strengthsMatch?.[1] || improvementsMatch?.[1]) {
-      const strengths =
-        strengthsMatch?.[1]?.trim() || "No specific strengths identified.";
-      const improvements =
-        improvementsMatch?.[1]?.trim() ||
-        "No specific areas for improvement identified.";
-      feedback =
-        `**Strengths:**\n${strengths}\n\n**Areas for Improvement:**\n${improvements}`.trim();
-    }
-
-    // Apply the quick fix (||) here as well
+    // ✅ Parse sections reliably
+    const strengths =
+      content
+        .match(/\*\*1\. Key Strengths:\*\*([\s\S]*?)\*\*2\./)?.[1]
+        ?.trim() || "";
+    const improvements =
+      content
+        .match(/\*\*2\. Areas of Improvement:\*\*([\s\S]*?)\*\*3\./)?.[1]
+        ?.trim() || "";
     const modelAnswer =
-      modelAnswerMatch?.[1]?.trim() || "No model answer provided";
+      content
+        .match(
+          /\*\*3\. Model Answer \(Improved Version\):\*\*([\s\S]*?)\*\*4\./
+        )?.[1]
+        ?.trim() || "No model answer provided";
 
-    // Extract scores from ratings section
-    const confidenceMatch = ratingsMatch?.[1]?.match(/Confidence:\s*(\d+)/);
-    const clarityMatch = ratingsMatch?.[1]?.match(/Clarity:\s*(\d+)/);
-    const relevanceMatch = ratingsMatch?.[1]?.match(/Relevance:\s*(\d+)/);
+    const scoreSection =
+      content.match(
+        /\*\*4\. Score \(Out of 10\) with Reasoning:\*\*([\s\S]*)/
+      )?.[1] || "";
 
-    const confidenceScore = confidenceMatch?.[1]
-      ? parseInt(confidenceMatch[1], 10)
-      : 5;
-    const clarityScore = clarityMatch?.[1] ? parseInt(clarityMatch[1], 10) : 5;
-    const relevanceScore = relevanceMatch?.[1]
-      ? parseInt(relevanceMatch[1], 10)
-      : 5;
+    const confidenceScore = parseInt(
+      scoreSection.match(/Confidence:\s*(\d+)/)?.[1] || "5"
+    );
+    const clarityScore = parseInt(
+      scoreSection.match(/Clarity:\s*(\d+)/)?.[1] || "5"
+    );
+    const relevanceScore = parseInt(
+      scoreSection.match(/Relevance:\s*(\d+)/)?.[1] || "5"
+    );
 
-    console.log("Parsed feedback:", {
-      feedback,
-      modelAnswer,
-      confidenceScore,
-      clarityScore,
-      relevanceScore,
-    });
+    const feedback = `
+**Key Strengths:**
+${strengths}
+
+**Areas of Improvement:**
+${improvements}
+`.trim();
 
     return {
       feedback,
@@ -180,7 +149,7 @@ User Answer: ${answer}
       clarityScore,
       relevanceScore,
     };
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error analyzing answer:", error);
     throw new Error("Failed to analyze answer");
   }
