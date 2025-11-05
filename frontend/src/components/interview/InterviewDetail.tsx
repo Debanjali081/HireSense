@@ -98,16 +98,14 @@ const InterviewDetail: React.FC = () => {
     return (
       <div className="max-w-6xl mx-auto px-4 mt-8 mb-8">
         <button
-          className="mb-4 bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 flex items-center"
+          className="mb-6 bg-gray-100 text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-200 flex items-center transition-colors shadow-sm"
           onClick={() => navigate('/interviews')}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Interviews
         </button>
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-          {error || 'Interview not found'}
+        <div className="bg-red-50 border border-red-200 text-red-800 px-6 py-4 rounded-xl shadow-sm">
+          <p className="text-base font-medium">{error || 'Interview not found'}</p>
         </div>
       </div>
     );
@@ -163,27 +161,27 @@ const InterviewDetail: React.FC = () => {
         </div>
 
         {interview.status.toLowerCase() === 'completed' && (
-          <div className="mt-6 mb-6">
-            <h2 className="text-2xl font-semibold mb-4 flex items-center">
-              <TrendingUp className="w-6 h-6 mr-2 text-blue-600" />
+          <div className="mt-8">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+              <TrendingUp className="w-5 h-5 mr-3 text-blue-600" />
               Overall Performance
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg border border-blue-200">
-                <div className="flex items-center mb-2">
-                  <Award className="w-5 h-5 mr-2 text-blue-600" />
-                  <h3 className="text-lg font-medium text-gray-900">Score</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl border border-blue-200 shadow-sm">
+                <div className="flex items-center mb-4">
+                  <Award className="w-6 h-6 mr-3 text-blue-600" />
+                  <h3 className="text-base font-medium text-gray-900">Score</h3>
                 </div>
-                <p className={`text-4xl font-bold ${getScoreColor(interview.overallScore || 0)}`}>
+                <p className={`text-3xl font-bold ${getScoreColor(interview.overallScore || 0)}`}>
                   {interview.overallScore !== undefined ? `${interview.overallScore}/100` : 'N/A'}
                 </p>
               </div>
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-lg border border-gray-200">
-                <div className="flex items-center mb-2">
-                  <CheckCircle2 className="w-5 h-5 mr-2 text-green-600" />
-                  <h3 className="text-lg font-medium text-gray-900">Feedback</h3>
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-8 rounded-xl border border-gray-200 shadow-sm">
+                <div className="flex items-center mb-4">
+                  <CheckCircle2 className="w-6 h-6 mr-3 text-green-600" />
+                  <h3 className="text-base font-medium text-gray-900">Feedback</h3>
                 </div>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-700 leading-relaxed text-sm">
                   {interview.overallFeedback || 'No feedback available'}
                 </p>
               </div>
