@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Award, BookOpen, CheckCircle2, TrendingUp } from 'lucide-react';
+import { Award, BookOpen, CheckCircle2, TrendingUp, ArrowLeft, Trash2 } from 'lucide-react';
 import { interviewAPI } from '../../services/api';
 import AnswerForm from './AnswerForm';
 import MarkdownRenderer from './MarkdownRenderer';
@@ -84,11 +84,12 @@ const InterviewDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <svg className="animate-spin h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-        </svg>
+      <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="relative">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-200 border-t-blue-600"></div>
+          <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-transparent border-t-indigo-400 animate-ping"></div>
+        </div>
+        <p className="mt-4 text-lg font-medium text-gray-700 animate-pulse">Loading interview details...</p>
       </div>
     );
   }
@@ -114,48 +115,52 @@ const InterviewDetail: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-4 mt-8 mb-8">
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-8">
         <button
-          className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 flex items-center transition-colors"
+          className="bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 px-6 py-3 rounded-xl hover:from-gray-200 hover:to-gray-300 flex items-center transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           onClick={() => navigate('/interviews')}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
+          <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Interviews
         </button>
         <button
-          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 flex items-center transition-colors"
+          className="bg-gradient-to-r from-red-500 to-red-600 text-white px-6 py-3 rounded-xl hover:from-red-600 hover:to-red-700 flex items-center transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           onClick={() => {
             if (window.confirm('Are you sure you want to delete this interview? This action cannot be undone.')) {
               handleDelete();
             }
           }}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-          </svg>
+          <Trash2 className="h-5 w-5 mr-2" />
           Delete Interview
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold text-gray-900">
-            {interview.jobTitle}
-          </h1>
-          <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-            interview.status.toLowerCase() === 'completed' ? 'bg-green-100 text-green-800' :
-            interview.status.toLowerCase() === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
-            'bg-blue-100 text-blue-800'
+      <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-xl border border-gray-100 mb-8 hover:shadow-2xl transition-all duration-300">
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex-1">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-2">
+              {interview.jobTitle}
+            </h1>
+            <p className="text-gray-600 text-lg flex items-center">
+              <svg className="w-5 h-5 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {new Date(interview.createdAt).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </p>
+          </div>
+          <span className={`px-4 py-2 rounded-full text-sm font-semibold shadow-md ${
+            interview.status.toLowerCase() === 'completed' ? 'bg-gradient-to-r from-green-400 to-green-500 text-white' :
+            interview.status.toLowerCase() === 'in_progress' ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white' :
+            'bg-gradient-to-r from-blue-400 to-blue-500 text-white'
           }`}>
             {formatStatus(interview.status)}
           </span>
         </div>
-
-        <p className="text-gray-600 text-sm mb-4">
-          Date: {new Date(interview.createdAt).toLocaleDateString()}
-        </p>
 
         {interview.status.toLowerCase() === 'completed' && (
           <div className="mt-6 mb-6">

@@ -71,31 +71,36 @@ const analyzeAnswer = async (
 ) => {
   try {
     const prompt = `
-      Analyze the following interview answer for the position of ${jobTitle}.
+You are an Interview Answer Evaluation AI for the role: ${jobTitle}.
 
-      Question: ${question}
+Your output must always follow the exact structure below — no extra text, no introduction, no explanation outside the sections.
 
-      Answer: ${answer}
+---
+**1. Key Strengths:**
+- (Write 3 short bullet points focusing on what the candidate did well)
 
-      Provide a comprehensive, narrative analysis of the answer. Structure your response with clear sections:
+**2. Areas of Improvement:**
+- (Write 3 short bullet points, constructive, supportive — avoid negative language)
 
-      **Strengths:**
-      - List 2-3 specific strengths of the answer, explaining why they are effective.
+**3. Model Answer (Improved Version):**
+(Write a natural, confident, conversational answer as if spoken by a strong candidate.
+Use clear language. Do not repeat the user's wording. Rewrite it better.)
 
-      **Areas for Improvement:**
-      - Identify 2-3 areas where the answer could be enhanced, with constructive suggestions.
+**4. Score (Out of 10) with Reasoning:**
+Confidence: X/10 — (1 sentence justification)
+Clarity: X/10 — (1 sentence justification)
+Relevance: X/10 — (1 sentence justification)
+---
 
-      **Model Answer:**
-      Provide a detailed, well-structured model answer that demonstrates excellent response quality for this question. Include specific examples and explanations.
+Tone Guidelines:
+- Supportive, encouraging, professional.
+- Avoid robotic, repetitive, or overly formal language.
+- Keep sentences concise and clear.
+- Do not add commentary outside the sections.
 
-      **Ratings:**
-      Rate the answer on a scale of 1-10 for each criterion, providing a brief justification for each score:
-      - Confidence: [score] - [brief justification]
-      - Clarity: [score] - [brief justification]
-      - Relevance: [score] - [brief justification]
-
-      Ensure the feedback is detailed, constructive, and professional, helping the candidate improve their interview skills.
-    `;
+Question: ${question}
+User Answer: ${answer}
+`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -106,13 +111,31 @@ const analyzeAnswer = async (
     }
 
     // Parse the response to extract feedback, model answer, and scores
- // New, more flexible parsing logic
-const stopLookahead = '(?=\\n?(?:###\\s)?\\*\\*(Strengths|Areas for Improvement|Model Answer|Ratings)\\*\\*|$)';
+    // New, more flexible parsing logic
+    const stopLookahead =
+      "(?=\\n?(?:###\\s)?\\*\\*(Strengths|Areas for Improvement|Model Answer|Ratings)\\*\\*|$)";
 
-const strengthsMatch = content.match(new RegExp('(?:###\\s)?\\*\\*Strengths\\*\\*\\s*(.+?)' + stopLookahead, 's'));
-const improvementsMatch = content.match(new RegExp('(?:###\\s)?\\*\\*Areas for Improvement\\*\\*\\s*(.+?)' + stopLookahead, 's'));
-const modelAnswerMatch = content.match(new RegExp('(?:###\\s)?\\*\\*Model Answer\\*\\*\\s*(.+?)' + stopLookahead, 's'));
-const ratingsMatch = content.match(new RegExp('(?:###\s)?\\*\\*Ratings\\*\\*\\s*(.+?)$', 's'));
+    const strengthsMatch = content.match(
+      new RegExp(
+        "(?:###\\s)?\\*\\*Strengths\\*\\*\\s*(.+?)" + stopLookahead,
+        "s"
+      )
+    );
+    const improvementsMatch = content.match(
+      new RegExp(
+        "(?:###\\s)?\\*\\*Areas for Improvement\\*\\*\\s*(.+?)" + stopLookahead,
+        "s"
+      )
+    );
+    const modelAnswerMatch = content.match(
+      new RegExp(
+        "(?:###\\s)?\\*\\*Model Answer\\*\\*\\s*(.+?)" + stopLookahead,
+        "s"
+      )
+    );
+    const ratingsMatch = content.match(
+      new RegExp("(?:###s)?\\*\\*Ratings\\*\\*\\s*(.+?)$", "s")
+    );
 
     let feedback = "No feedback provided";
     if (strengthsMatch?.[1] || improvementsMatch?.[1]) {
