@@ -195,9 +195,10 @@ hiresense/
 - `MONGO_URI`: MongoDB connection string
 - `JWT_SECRET`: Secret key for JWT token signing
 - `GEMINI_API_KEY`: Google Gemini AI API key
-- `CLIENT_URL`: Frontend application URL
+- `CLIENT_URL`: Frontend application URL (e.g., https://hiresense-1.onrender.com for production)
 - `GOOGLE_CLIENT_ID`: Google OAuth client ID
 - `GOOGLE_CLIENT_SECRET`: Google OAuth client secret
+- `GOOGLE_CALLBACK_URL`: Google OAuth callback URL (e.g., https://hiresense-1.onrender.com/api/auth/google/callback for production)
 
 #### Frontend
 - `VITE_API_URL`: Backend API URL
