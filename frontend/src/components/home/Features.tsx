@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -42,8 +41,6 @@ const features = [
 ];
 
 export default function Features() {
-  const [activeCard, setActiveCard] = useState(0);
-
   return (
     <section id='features' className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 relative overflow-hidden">
       {/* Background Elements */}
@@ -67,7 +64,6 @@ export default function Features() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
-          
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-blue-900 mb-6 leading-tight">
             Everything You Need to{' '}
             <span className="text-orange-600">Succeed</span>
@@ -81,11 +77,10 @@ export default function Features() {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {features.map((feature, index) => (
-            <Link to='/dashboard'>
-            <div
+            <Link 
               key={index}
-              onClick={() => setActiveCard(index)}
-              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 border border-white/20 max-w-sm mx-auto w-full"
+              to='/dashboard'
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 border border-white/20 max-w-sm mx-auto w-full block"
             >
               {/* Background Image with Gradient Overlay */}
               <div 
@@ -131,7 +126,6 @@ export default function Features() {
 
               {/* Hover Glow Effect */}
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            </div>
             </Link>
           ))}
         </div>
