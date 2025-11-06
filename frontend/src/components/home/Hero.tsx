@@ -2,12 +2,49 @@ import { ArrowRight, Play } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-slate-100  via-blue-100 to-slate-900 text-blue-900 overflow-hidden min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-40"></div>
+    <section className="relative bg-gradient-to-br from-slate-700 via-blue-300 to-slate-900 text-blue-900 overflow-hidden min-h-screen flex items-center">
+      {/* Enhanced Grid Pattern Background */}
+      <div className="absolute inset-0 opacity-30">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="2" strokeOpacity="0.2"/>
+            </pattern>
+            <pattern id="smallGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="white" strokeWidth="1" strokeOpacity="0.1"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#smallGrid)" />
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
 
+      {/* Grid Pattern Overlays */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-900/10 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-900/10 to-transparent"></div>
 
-      <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/30 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-orange-500/20 rounded-full blur-3xl animate-pulse-slower"></div>
+      {/* Animated Grid Highlights */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 opacity-40">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="highlightGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0EA5E9" strokeWidth="1.5" strokeOpacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#highlightGrid)" />
+        </svg>
+      </div>
+
+      <div className="absolute bottom-1/3 right-1/4 w-48 h-48 opacity-30">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="orangeGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#F97316" strokeWidth="1" strokeOpacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#orangeGrid)" />
+        </svg>
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-0">
         <div className="text-center max-w-5xl mx-auto space-y-12 animate-fade-in">

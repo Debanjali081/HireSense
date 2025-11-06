@@ -1,279 +1,139 @@
 import { useState } from 'react';
-import { FileText, MessageSquare, Mic, Award, Lock, BarChart3, Smartphone, ArrowRight, } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const features = [
   {
-    icon: FileText,
     title: 'Resume Upload & Parsing',
-    description: 'Upload your resume and let our AI extract key information to generate tailored interview questions based on your experience.',
-    gradient: 'from-cyan-500 to-blue-600',
-    stat: '100%',
-    statLabel: 'Accuracy',
-    color: 'cyan'
+    description: 'Upload your resume and let our AI extract key information to generate tailored interview questions based on your experience and skills.',
+    bgImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Preparation'
   },
   {
-    icon: MessageSquare,
     title: 'AI-Generated Questions',
-    description: 'Receive intelligent, role-specific questions that adapt to your background and the position you\'re targeting.',
-    gradient: 'from-blue-600 to-indigo-600',
-    stat: '500+',
-    statLabel: 'Question Bank',
-    color: 'blue'
+    description: 'Receive intelligent, role-specific questions that adapt to your background and the position you\'re targeting for realistic practice.',
+    bgImage: 'https://images.unsplash.com/photo-1535223289827-42f1e9919769?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Intelligence'
   },
   {
-    icon: Mic,
     title: 'Real-Time Voice Feedback',
-    description: 'Practice with voice recognition technology that analyzes your responses, tone, and delivery in real-time.',
-    gradient: 'from-indigo-600 to-purple-600',
-    stat: '<1s',
-    statLabel: 'Response Time',
-    color: 'indigo'
+    description: 'Practice with advanced voice recognition that analyzes your responses, tone, pace, and delivery in real-time.',
+    bgImage: 'https://images.unsplash.com/photo-1554260570-9140fd3b7614?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Feedback'
   },
   {
-    icon: Award,
     title: 'Comprehensive Scoring',
-    description: 'Get detailed performance metrics on communication, technical knowledge, confidence, and overall interview readiness.',
-    gradient: 'from-purple-600 to-orange-500',
-    stat: '15+',
-    statLabel: 'Metrics',
-    color: 'purple'
+    description: 'Get detailed performance metrics on communication skills, technical knowledge, confidence, and overall interview readiness.',
+    bgImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Analytics'
   },
   {
-    icon: Lock,
-    title: 'User Authentication',
-    description: 'Secure login system to protect your data and track your progress across multiple practice sessions.',
-    gradient: 'from-orange-500 to-red-500',
-    stat: '256-bit',
-    statLabel: 'Encryption',
-    color: 'orange'
+    title: 'Secure Authentication',
+    description: 'Protected login system ensuring your data security while tracking progress across multiple practice sessions.',
+    bgImage: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Security'
   },
   {
-    icon: BarChart3,
-    title: 'Dashboard Analytics',
-    description: 'Visualize your improvement over time with detailed analytics and insights on your interview performance.',
-    gradient: 'from-cyan-500 to-teal-500',
-    stat: '20+',
-    statLabel: 'Insights',
-    color: 'teal'
-  },
-  {
-    icon: Smartphone,
-    title: 'Responsive Design',
-    description: 'Practice anytime, anywhere with a seamless experience across desktop, tablet, and mobile devices.',
-    gradient: 'from-teal-500 to-cyan-500',
-    stat: 'All',
-    statLabel: 'Devices',
-    color: 'cyan'
+    title: 'Progress Analytics',
+    description: 'Visualize your improvement journey with comprehensive analytics and actionable insights on your performance trends.',
+    bgImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    category: 'Insights'
   },
 ];
 
 export default function Features() {
-  const [activeFeature, setActiveFeature] = useState(0);
-  const [isHovering, setIsHovering] = useState(false);
+  const [activeCard, setActiveCard] = useState(0);
 
   return (
-    <section className="py-20 lg:py-32 bg-white/20 relative overflow-hidden">
-      {/* Animated background elements */}
+    <section id='features' className="py-20 lg:py-32 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 relative overflow-hidden">
+      {/* Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 -left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 -right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slower"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse-slower"></div>
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]"></div>
+      {/* Grid Pattern */}
+      <div className="absolute inset-0 opacity-20">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0EA5E9" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+      </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 mb-8 group hover:bg-white/10 transition-all duration-300">
-          </div>
+        <div className="text-center max-w-3xl mx-auto mb-20">
           
-          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-blue-900 mb-8 leading-tight font-[head     ]">
-            Supercharge Your{' '}
-            <span className="text-orange-600">
-              Preparation
-            </span>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-blue-900 mb-6 leading-tight">
+            Everything You Need to{' '}
+            <span className="text-orange-600">Succeed</span>
           </h2>
           
-          <p className="text-xl text-gray-900 max-w-2xl mx-auto leading-relaxed">
-            Experience the future of interview preparation with cutting-edge AI technology 
-            that adapts to your unique background and goals.
+          <p className="text-lg sm:text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed">
+            Comprehensive tools and features designed to transform your interview preparation experience
           </p>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="lg:grid lg:grid-cols-12 lg:gap-12 hidden">
-          {/* Features List */}
-          <div className="lg:col-span-5 space-y-4">
-            {features.map((feature, index) => {
-              const Icon = feature.icon;
-              const isActive = activeFeature === index;
-              
-              return (
-                <button
-                  key={index}
-                  onClick={() => setActiveFeature(index)}
-                  onMouseEnter={() => {
-                    setIsHovering(true);
-                    setActiveFeature(index);
-                  }}
-                  onMouseLeave={() => setIsHovering(false)}
-                  className={`group w-full text-left p-6 rounded-2xl transition-all duration-500 backdrop-blur-sm border ${
-                    isActive
-                      ? 'bg-white/10 border-cyan-400/50 shadow-2xl scale-[1.02]'
-                      : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
-                  }`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={`flex-shrink-0 p-3 rounded-xl bg-gradient-to-br ${feature.gradient} transition-all duration-500 ${
-                        isActive ? 'scale-110 shadow-lg' : 'scale-100 group-hover:scale-105'
-                      }`}
-                    >
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-3">
-                        <h3 className={`text-lg font-bold transition-colors duration-300 ${
-                          isActive ? 'text-orange-600' : 'text-blue-900 group-hover:text-white'
-                        }`}>
-                          {feature.title}
-                        </h3>
-                        
-                        <div className="flex items-center gap-2">
-                          <div className={`text-sm font-bold px-2 py-1 rounded-full transition-all duration-300 ${
-                            isActive 
-                              ? 'bg-cyan-500/20 text-cyan-400' 
-                              : 'bg-white/5 text-gray-400 group-hover:bg-cyan-500/20 group-hover:text-cyan-400'
-                          }`}>
-                            {feature.stat}
-                          </div>
-                          <ArrowRight
-                            className={`w-4 h-4 flex-shrink-0 transition-all duration-300 ${
-                              isActive
-                                ? 'text-cyan-400 translate-x-0 opacity-100'
-                                : 'text-black -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0'
-                            }`}
-                          />
-                        </div>
-                      </div>
-                      
-                      <p className={`text-sm leading-relaxed transition-all duration-300 ${
-                        isActive ? 'text-black max-h-20' : 'text-gray-800 max-h-0 overflow-hidden'
-                      }`}>
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Feature Visualization */}
-          <div className="lg:col-span-7 relative">
-            <div className="sticky top-8">
-              {/* Animated orb background */}
-              <div className="absolute inset-0">
-                <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-3xl transition-all duration-1000 ${
-                  isHovering ? 'opacity-30' : 'opacity-20'
-                }`} style={{
-                  background: `radial-gradient(circle, ${
-                    features[activeFeature].color === 'cyan' ? 'rgba(6,182,212,0.3)' :
-                    features[activeFeature].color === 'blue' ? 'rgba(37,99,235,0.3)' :
-                    features[activeFeature].color === 'indigo' ? 'rgba(79,70,229,0.3)' :
-                    features[activeFeature].color === 'purple' ? 'rgba(147,51,234,0.3)' :
-                    features[activeFeature].color === 'orange' ? 'rgba(249,115,22,0.3)' :
-                    'rgba(20,184,166,0.3)'
-                  }, transparent 70%)`
-                }}></div>
-              </div>
-
-              {/* Main feature display */}
-              <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-12 border border-white/10 shadow-2xl overflow-hidden">
-                {/* Animated border */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
-                
-                {/* Content */}
-                {features.map((feature, index) => {
-                  const Icon = feature.icon;
-                  const isActive = activeFeature === index;
-                  
-                  return (
-                    <div
-                      key={index}
-                      className={`transition-all duration-700 space-y-8 ${
-                        isActive ? 'opacity-100 translate-y-0' : 'opacity-0 absolute inset-0 translate-y-8 pointer-events-none'
-                      }`}
-                    >
-                      {/* Icon and Stats */}
-                      <div className="flex items-center justify-between">
-                        <div className={`p-6 rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-2xl`}>
-                          <Icon className="w-12 h-12 text-white" />
-                        </div>
-                        
-                      </div>
-
-                      {/* Title and Description */}
-                      <div>
-                        <h3 className="text-4xl font-bold text-blue-900 mb-6 leading-tight">
-                          {feature.title}
-                        </h3>
-                        <p className="text-xl text-gray-900 leading-relaxed">
-                          {feature.description}
-                        </p>
-                      </div>
-
-                      {/* Progress indicator */}
-                      <div className="flex items-center gap-4 pt-6 border-t border-white/10">
-                        <div className="flex -space-x-2">
-                          {[1, 2, 3].map((i) => (
-                            <div key={i} className="w-10 h-10 rounded-full bg-orange-500 border-4 border-blue-900 shadow-lg"></div>
-                          ))}
-                        </div>
-                        <span className="text-gray-400 text-lg">
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile Layout */}
-        <div className="lg:hidden space-y-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            
-            return (
-              <div
-                key={index}
-                className="group relative bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-300"
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+          {features.map((feature, index) => (
+            <Link to='/dashboard'>
+            <div
+              key={index}
+              onClick={() => setActiveCard(index)}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 border border-white/20 max-w-sm mx-auto w-full"
+            >
+              {/* Background Image with Gradient Overlay */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center transition-all duration-700 group-hover:scale-110"
+                style={{ backgroundImage: `url(${feature.bgImage})` }}
               >
-                {/* Animated gradient border */}
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-                
-                <div className="relative p-6">
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-3">
-                        <h3 className="text-xl font-bold text-blue-900 mb-2">{feature.title}</h3>
-                      </div>
-                      <p className="text-gray-800 leading-relaxed mb-4">{feature.description}</p>
-                    </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30 group-hover:from-black/70 group-hover:via-black/40 group-hover:to-black/20 transition-all duration-500"></div>
+              </div>
+
+              {/* Content */}
+              <div className="relative z-10 p-6 h-72 flex flex-col justify-between">
+                {/* Category Badge */}
+                <div className="flex justify-between items-start">
+                  <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-medium border border-white/30">
+                    {feature.category}
+                  </span>
+                  <div className="w-7 h-7 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30 group-hover:bg-cyan-500/80 transition-all duration-300">
+                    <ArrowRight className="w-3 h-3 text-white transform group-hover:translate-x-0.5 transition-transform duration-300" />
                   </div>
                 </div>
+
+                {/* Text Content */}
+                <div className="space-y-3">
+                  <h3 className="text-xl font-bold text-white leading-tight group-hover:text-cyan-200 transition-colors duration-300">
+                    {feature.title}
+                  </h3>
+                  <p className="text-white/90 text-sm leading-relaxed opacity-0 max-h-0 group-hover:opacity-100 group-hover:max-h-28 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 overflow-hidden">
+                    {feature.description}
+                  </p>
+                </div>
+
+                {/* Progress Indicator */}
+                <div className="flex items-center gap-2 pt-3 border-t border-white/20">
+                  <div className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-cyan-400 rounded-full transform origin-left transition-transform duration-1000 group-hover:scale-x-100 scale-x-0"
+                      style={{ transitionDelay: '300ms' }}
+                    ></div>
+                  </div>
+                  <span className="text-xs text-white/60 font-medium">Explore</span>
+                </div>
               </div>
-            );
-          })}
+
+              {/* Hover Glow Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/10 via-blue-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            </div>
+            </Link>
+          ))}
         </div>
       </div>
     </section>

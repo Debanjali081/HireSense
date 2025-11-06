@@ -11,29 +11,6 @@ export default function Footer() {
             <p className="text-sm leading-relaxed">
               AI-powered mock interview platform helping professionals master their interview skills and land their dream jobs.
             </p>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors duration-300 hover:text-cyan-400"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors duration-300 hover:text-cyan-400"
-                aria-label="GitHub"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors duration-300 hover:text-cyan-400"
-                aria-label="Email"
-              >
-                <Mail className="w-5 h-5" />
-              </a>
-            </div>
           </div>
 
           {/* Product Links */}
@@ -41,10 +18,9 @@ export default function Footer() {
             <div>
               <h3 className="text-white font-semibold mb-4">Product</h3>
               <ul className="space-y-3">
-                <li><a href="#" className="hover:text-cyan-400 transition-colors duration-300 text-sm">Features</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors duration-300 text-sm">How It Works</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors duration-300 text-sm">Pricing</a></li>
-                <li><a href="#" className="hover:text-cyan-400 transition-colors duration-300 text-sm">FAQ</a></li>
+                <li><a href="#features" className="hover:text-cyan-400 transition-colors duration-300 text-sm">Features</a></li>
+                <li><a href="#how-it-works" className="hover:text-cyan-400 transition-colors duration-300 text-sm">How It Works</a></li>
+                <li><a href="#contact" className="hover:text-cyan-400 transition-colors duration-300 text-sm">CTA</a></li>
               </ul>
             </div>
           </div>
