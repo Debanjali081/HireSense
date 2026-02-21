@@ -22,11 +22,19 @@ axios.interceptors.request.use(
 // Add a response interceptor to handle errors
 axios.interceptors.response.use(
   (response) => response,
-  (error) => {
-    // Handle 401 Unauthorized errors
-    if (error.response && error.response.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/login';
+  (error: unknown) => {
+    // Handle 401 Unauthorized errors - but don't redirect if we're on login/register pages
+    // Let the components handle authentication errors themselves
+    if (typeof error === 'object' && error !== null && 'response' in error) {
+      const axiosError = error as { response?: { status?: number } };
+      if (axiosError.response?.status === 401) {
+        const currentPath = window.location.pathname;
+        // Only redirect if not on auth pages (login, register, etc.)
+        if (!currentPath.includes('/login') && !currentPath.includes('/register')) {
+          localStorage.removeItem('token');
+          window.location.href = '/login';
+        }
+      }
     }
     return Promise.reject(error);
   }
@@ -47,7 +55,7 @@ export const authAPI = {
 
 // User API
 export const userAPI = {
-  updateProfile: (userData: any) => {
+  updateProfile: (userData: unknown) => {
     return axios.put('/users/profile', userData);
   },
 };

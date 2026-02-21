@@ -65,206 +65,172 @@ const NewInterview: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 pt-20 flex justify-center items-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-lg text-gray-600">Loading your resumes...</p>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 pt-20">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 pt-20 pb-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header Section */}
-        <div className="mb-8">
-          <button
-            className="group bg-white/80 backdrop-blur-lg text-gray-700 px-6 py-3 rounded-xl hover:bg-white transition-all duration-200 shadow-lg hover:shadow-xl border border-white/60 flex items-center mb-6"
-            onClick={() => navigate('/interviews')}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Interviews
-          </button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/interviews')}
+          className="inline-flex items-center text-sm text-gray-500 hover:text-gray-700 transition-colors mb-8"
+        >
+          <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </button>
 
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">
-              Start New Interview
-            </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Select your resume and enter the job title to begin your AI-powered mock interview session.
-            </p>
-          </div>
+        {/* Header */}
+        <div className="mb-10">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">New Interview</h1>
+          <p className="text-gray-500 text-sm">Configure your mock interview session</p>
         </div>
 
-        {/* Main Content */}
-        <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white/60 p-8">
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-8">
-              <div className="flex items-center">
-                <div className="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-red-600">⚠️</span>
-                </div>
-                <p className="text-red-700 font-medium">{error}</p>
-              </div>
-            </div>
-          )}
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg">
+            <p className="text-sm text-red-600">{error}</p>
+          </div>
+        )}
 
-          {resumes.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="text-4xl">📄</span>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                No Resumes Found
-              </h3>
-              <p className="text-gray-600 mb-8 max-w-md mx-auto">
-                You need to upload a resume before you can start an interview. Your resume helps us generate personalized questions.
-              </p>
-              <button
-                className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200 flex items-center mx-auto"
-                onClick={() => navigate('/resumes/upload')}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                </svg>
-                Upload Your First Resume
-              </button>
+        {resumes.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📄</span>
             </div>
-          ) : (
-            <div className="space-y-8">
-              {/* Resume Selection Section */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-blue-600 font-bold">1</span>
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900">Select a Resume</h2>
-                    <p className="text-gray-600">Choose which resume to use for this interview</p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {resumes.map((resume) => (
-                    <div
-                      key={resume._id}
-                      className={`relative rounded-xl p-6 cursor-pointer transition-all duration-200 border-2 ${
-                        selectedResume === resume._id
-                          ? 'border-blue-500 bg-blue-50/50 shadow-lg transform scale-105'
-                          : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
-                      }`}
-                      onClick={() => setSelectedResume(resume._id)}
-                    >
-                      {selectedResume === resume._id && (
-                        <div className="absolute -top-2 -right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                          </svg>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No resumes found</h3>
+            <p className="text-sm text-gray-500 mb-6 max-w-sm mx-auto">
+              Upload a resume to start practicing with personalized interview questions
+            </p>
+            <button
+              onClick={() => navigate('/resumes/upload')}
+              className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Upload Resume
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-10">
+            {/* Step 1: Resume Selection */}
+            <div>
+              <div className="flex items-center mb-5">
+                <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full mr-3">
+                  STEP 1
+                </span>
+                <h2 className="text-sm font-medium text-gray-700">Select Resume</h2>
+              </div>
+              
+              <div className="space-y-2">
+                {resumes.map((resume) => (
+                  <div
+                    key={resume._id}
+                    className={`group relative flex items-center p-4 border rounded-lg cursor-pointer transition-all ${
+                      selectedResume === resume._id
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-200 hover:border-gray-300 bg-white'
+                    }`}
+                    onClick={() => setSelectedResume(resume._id)}
+                  >
+                    <div className="flex-1 flex items-center min-w-0">
+                      <div className="flex-shrink-0 mr-3">
+                        <div className="w-8 h-8 bg-blue-50 rounded flex items-center justify-center">
+                          <span className="text-blue-600 text-sm">📄</span>
                         </div>
-                      )}
-                      
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-3">
-                            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                              <span className="text-blue-600">📄</span>
-                            </div>
-                            <h3 className="font-semibold text-gray-900 truncate">
-                              {resume.fileName}
-                            </h3>
-                          </div>
-                          <p className="text-sm text-gray-500">
-                            Uploaded {new Date(resume.createdAt).toLocaleDateString('en-US', { 
-                              year: 'numeric', 
-                              month: 'long', 
-                              day: 'numeric' 
-                            })}
-                          </p>
-                        </div>
-                        <button
-                          className="text-blue-600 hover:text-blue-800 text-sm font-medium ml-4"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/resumes/${resume._id}`);
-                          }}
-                        >
-                          View
-                        </button>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900 truncate">
+                          {resume.fileName}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {new Date(resume.createdAt).toLocaleDateString('en-US', { 
+                            month: 'short', 
+                            day: 'numeric', 
+                            year: 'numeric' 
+                          })}
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
+                    
+                    {selectedResume === resume._id && (
+                      <div className="flex-shrink-0 ml-3">
+                        <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
 
-              {/* Job Title Section */}
-              <div>
-                <div className="flex items-center mb-6">
-                  <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center mr-4">
-                    <span className="text-green-600 font-bold">2</span>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/resumes/${resume._id}`);
+                      }}
+                      className="ml-3 text-xs text-gray-400 hover:text-gray-600 transition-colors"
+                    >
+                      View
+                    </button>
                   </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-gray-900">Enter Job Details</h2>
-                    <p className="text-gray-600">Specify the role you're preparing for</p>
-                  </div>
-                </div>
-
-                <div className="bg-gray-50 rounded-xl p-6">
-                  <label className="block text-sm font-semibold text-gray-700 mb-3">
-                    Job Title
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="e.g., Senior Software Engineer, Product Manager, Data Scientist..."
-                    value={jobTitle}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                  />
-                  <p className="text-sm text-gray-500 mt-2">
-                    This helps us generate role-specific questions for your interview practice.
-                  </p>
-                </div>
-              </div>
-
-              {/* Action Section */}
-              <div className="text-center pt-6">
-                <button
-                  className={`group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-12 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform transition-all duration-200 flex items-center mx-auto ${
-                    !selectedResume || !jobTitle.trim() || creating 
-                      ? 'opacity-50 cursor-not-allowed' 
-                      : 'hover:-translate-y-0.5'
-                  }`}
-                  disabled={!selectedResume || !jobTitle.trim() || creating}
-                  onClick={handleCreateInterview}
-                >
-                  {creating ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                      Creating Interview...
-                    </>
-                  ) : (
-                    <>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-3 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      Start Interview Session
-                    </>
-                  )}
-                </button>
-                
-                {(!selectedResume || !jobTitle.trim()) && (
-                  <p className="text-gray-500 text-sm mt-3">
-                    Please select a resume and enter a job title to continue
-                  </p>
-                )}
+                ))}
               </div>
             </div>
-          )}
-        </div>
+
+            {/* Step 2: Job Details */}
+            <div>
+              <div className="flex items-center mb-5">
+                <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full mr-3">
+                  STEP 2
+                </span>
+                <h2 className="text-sm font-medium text-gray-700">Job Title</h2>
+              </div>
+
+              <div>
+                <input
+                  type="text"
+                  value={jobTitle}
+                  onChange={(e) => setJobTitle(e.target.value)}
+                  placeholder="e.g., Senior Software Engineer"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                />
+                <p className="mt-2 text-xs text-gray-400">
+                  This helps generate role-specific questions
+                </p>
+              </div>
+            </div>
+
+            {/* Action Button */}
+            <div className="pt-4">
+              <button
+                onClick={handleCreateInterview}
+                disabled={!selectedResume || !jobTitle.trim() || creating}
+                className={`w-full py-3 px-4 rounded-lg text-sm font-medium transition-all ${
+                  !selectedResume || !jobTitle.trim() || creating
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-[#1E3A8A] text-white hover:bg-blue-700'
+                }`}
+              >
+                {creating ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Creating...
+                  </span>
+                ) : (
+                  'Start Interview'
+                )}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
